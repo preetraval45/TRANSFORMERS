@@ -4,7 +4,7 @@ Members:
 
 Jack Helmer - Programming (SQL,Java,Python), Scripting, Backend, Documentation
 
-Dany Babikerali
+Dany Babikerali - Programming (Python, Java, SQL, TS/JS), Frontend, Backend, Database Implementation
 
 Name: Preet Raval
 
