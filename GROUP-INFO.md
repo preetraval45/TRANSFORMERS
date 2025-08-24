@@ -5,6 +5,7 @@ Members:
 Jack Helmer - Programming (SQL,Java,Python), Scripting, Backend, Documentation
 
 Dany Babikerali - Programming (Python, Java, SQL, TS/JS), Frontend, Backend, Database Implementation
+
 Preet Raval -
     Programming Languages: JavaScript, Python, Java, C++, C#, SQL
     Frontend Development: React.js, HTML5, CSS3, Bootstrap, Tailwind CSS, Vu
