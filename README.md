@@ -16,7 +16,6 @@ Inventory & Shipment Management Portal - A shared platform for vendors and engin
 
 ## 🏗️ Project Structure
 
-'''
 TRANSFORMERS/
 ├── Backend/           # Python & FastAPI backend services
 ├── Database/          # Database schemas and configurations
@@ -26,7 +25,6 @@ TRANSFORMERS/
 ├── Frontend/          # HTML, CSS, JS, NextJS frontend
 ├── GROUP-INFO.md      # Detailed team member information
 └── README.md         # Project overview and documentation
-'''
 
 ## 🎯 Core Deliverables
 
