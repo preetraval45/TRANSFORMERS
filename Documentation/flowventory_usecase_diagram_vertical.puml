@@ -1,0 +1,211 @@
+@startuml FlowventoryUseCaseVertical
+!theme plain
+
+skinparam {
+    BackgroundColor white
+    ArrowColor #2C3E50
+    BorderColor #34495E
+
+    UsecaseBackgroundColor #E3F2FD
+    UsecaseBorderColor #1976D2
+    UsecaseFontColor #1976D2
+    UsecaseFontSize 11
+    UsecaseFontStyle bold
+
+    ActorBackgroundColor #F3E5F5
+    ActorBorderColor #8E24AA
+    ActorFontColor #8E24AA
+    ActorFontSize 12
+    ActorFontStyle bold
+
+    PackageBackgroundColor #F1F8E9
+    PackageBorderColor #689F38
+    PackageFontColor #388E3C
+    PackageFontSize 14
+    PackageFontStyle bold
+
+    SystemBorderColor #FF5722
+    SystemBackgroundColor #FFF3E0
+    SystemFontColor #FF5722
+    SystemFontSize 16
+    SystemFontStyle bold
+}
+
+title <size:20><color:#2C3E50><b>Flowventory System - Use Case Diagram</b></color></size>\n<size:14><color:#7F8C8D>Inventory & Shipment Management Portal</color></size>
+
+left to right direction
+
+actor "Client" as client #FFE0E0
+actor "Engineer" as engineer #E0FFE0
+actor "Admin" as admin #E0E0FF
+
+rectangle "Flowventory System" as system #FFF8E1 {
+
+    package "Authentication & User Management" #F0F8FF {
+        usecase "Login to System" as UC1 #E1F5FE
+        usecase "Logout from System" as UC2 #E1F5FE
+        usecase "Update Profile" as UC3 #E1F5FE
+        usecase "Create User Account" as UC4 #FFEBEE
+        usecase "Edit User Account" as UC5 #FFEBEE
+        usecase "Delete User Account" as UC6 #FFEBEE
+    }
+
+    package "Inventory Management" #F3E5F5 {
+        usecase "View Inventory Items" as UC7 #F8BBD9
+        usecase "Add New Inventory Item" as UC8 #F8BBD9
+        usecase "Update Item Status" as UC9 #F8BBD9
+        usecase "Update Item Quantity" as UC10 #F8BBD9
+        usecase "Search Inventory" as UC11 #F8BBD9
+        usecase "Filter by Vendor" as UC12 #F8BBD9
+        usecase "Filter by Urgency" as UC13 #F8BBD9
+    }
+
+    package "Shipment Management" #E8F5E8 {
+        usecase "View Shipments" as UC14 #C8E6C9
+        usecase "Track Order Status" as UC15 #C8E6C9
+        usecase "Mark Shipment Received" as UC16 #C8E6C9
+        usecase "Mark Partially Received" as UC17 #C8E6C9
+        usecase "Update Expected Delivery" as UC18 #C8E6C9
+        usecase "Flag Missing Items" as UC19 #C8E6C9
+    }
+
+    package "Document Management" #FFF3E0 {
+        usecase "Upload Packing Slip" as UC20 #FFE0B2
+        usecase "View Packing Slips" as UC21 #FFE0B2
+        usecase "Link Document to Shipment" as UC22 #FFE0B2
+        usecase "Validate File Type" as UC23 #FFE0B2
+        usecase "Create Document Version" as UC24 #FFE0B2
+    }
+
+    package "Project Management" #F3E5F5 {
+        usecase "Assign Items to Project" as UC25 #E1BEE7
+        usecase "Track Project Progress" as UC26 #E1BEE7
+        usecase "Generate Project Report" as UC27 #E1BEE7
+        usecase "View Project Status" as UC28 #E1BEE7
+    }
+
+    package "Reporting & Analytics" #E0F2F1 {
+        usecase "View Dashboard Metrics" as UC29 #B2DFDB
+        usecase "Generate Inventory Report" as UC30 #B2DFDB
+        usecase "Export Search Results" as UC31 #B2DFDB
+        usecase "View Audit Logs" as UC32 #FFCDD2
+        usecase "Export Data" as UC33 #FFCDD2
+    }
+
+    package "System Configuration" #FCE4EC {
+        usecase "Configure System Settings" as UC34 #F8BBD9
+        usecase "Update Notification Settings" as UC35 #F8BBD9
+        usecase "Manage File Type Settings" as UC36 #F8BBD9
+        usecase "Reset to Defaults" as UC37 #F8BBD9
+    }
+
+    package "Notifications" #E8EAF6 {
+        usecase "Receive Shipment Alerts" as UC38 #C5CAE9
+        usecase "Receive Low Stock Alerts" as UC39 #C5CAE9
+        usecase "Receive Delivery Confirmation" as UC40 #C5CAE9
+        usecase "Receive Access Denied Alert" as UC41 #C5CAE9
+    }
+}
+
+' Client connections
+client --> UC1
+client --> UC2
+client --> UC3
+client --> UC7
+client --> UC14
+client --> UC15
+client --> UC20
+client --> UC21
+client --> UC28
+client --> UC29
+client --> UC38
+client --> UC40
+
+' Engineer connections
+engineer --> UC1
+engineer --> UC2
+engineer --> UC3
+engineer --> UC7
+engineer --> UC8
+engineer --> UC9
+engineer --> UC10
+engineer --> UC11
+engineer --> UC12
+engineer --> UC13
+engineer --> UC14
+engineer --> UC16
+engineer --> UC17
+engineer --> UC18
+engineer --> UC19
+engineer --> UC20
+engineer --> UC21
+engineer --> UC22
+engineer --> UC23
+engineer --> UC24
+engineer --> UC25
+engineer --> UC26
+engineer --> UC27
+engineer --> UC28
+engineer --> UC29
+engineer --> UC30
+engineer --> UC31
+engineer --> UC38
+engineer --> UC39
+engineer --> UC40
+
+' Admin connections
+admin --> UC1
+admin --> UC2
+admin --> UC3
+admin --> UC4
+admin --> UC5
+admin --> UC6
+admin --> UC7
+admin --> UC8
+admin --> UC9
+admin --> UC10
+admin --> UC11
+admin --> UC12
+admin --> UC13
+admin --> UC14
+admin --> UC16
+admin --> UC17
+admin --> UC18
+admin --> UC19
+admin --> UC20
+admin --> UC21
+admin --> UC22
+admin --> UC23
+admin --> UC24
+admin --> UC25
+admin --> UC26
+admin --> UC27
+admin --> UC28
+admin --> UC29
+admin --> UC30
+admin --> UC31
+admin --> UC32
+admin --> UC33
+admin --> UC34
+admin --> UC35
+admin --> UC36
+admin --> UC37
+admin --> UC38
+admin --> UC39
+admin --> UC40
+admin --> UC41
+
+' Include relationships
+UC20 .> UC23 : <<include>>
+UC22 .> UC23 : <<include>>
+UC8 .> UC9 : <<include>>
+UC16 .> UC19 : <<extend>>
+UC17 .> UC19 : <<extend>>
+
+note right of UC1 : All users must authenticate\nbefore accessing system features
+
+note left of UC32 : Only admins can view\naudit logs for security
+
+note bottom of UC19 : Triggered when items\nare missing from shipment
+
+@enduml

@@ -1,0 +1,299 @@
+@startuml FlowventoryClassDiagram
+!theme toy
+!define PRIMARY #3498DB
+!define SECONDARY #2ECC71
+!define ACCENT #E74C3C
+!define WARNING #F39C12
+!define SUCCESS #27AE60
+
+skinparam {
+    BackgroundColor #F8F9FA
+    ArrowColor #2C3E50
+    BorderColor #34495E
+
+    ClassBackgroundColor PRIMARY
+    ClassBorderColor #2980B9
+    ClassFontColor white
+    ClassFontSize 12
+    ClassFontStyle bold
+
+    PackageBackgroundColor #ECF0F1
+    PackageBorderColor #BDC3C7
+    PackageFontColor #2C3E50
+    PackageFontSize 14
+    PackageFontStyle bold
+
+    StereotypeCBackgroundColor WARNING
+    StereotypeABackgroundColor SUCCESS
+    StereotypeIBackgroundColor ACCENT
+    StereotypeEBackgroundColor SECONDARY
+}
+
+title <size:18><color:#2C3E50><b>Flowventory - Inventory & Shipment Management Portal</b></color></size>\n<size:14><color:#7F8C8D>Class Diagram</color></size>
+
+package "User Management" #DDDDDD {
+    abstract class User <<abstract>> #E8F6F3 {
+        - userId: String
+        - username: String
+        - password: String
+        - email: String
+        - createdAt: DateTime
+        - lastLogin: DateTime
+        --
+        + authenticate(): Boolean
+        + updateProfile(): Boolean
+        + getRole(): UserRole
+    }
+
+    enum UserRole #FEF9E7 {
+        CLIENT
+        ENGINEER
+        ADMIN
+    }
+
+    class Client #D5E8D4 {
+        - clientId: String
+        - companyName: String
+        - contactPerson: String
+        --
+        + viewShipments(): List<Shipment>
+        + uploadPackingSlip(): Boolean
+        + viewInventory(): List<InventoryItem>
+        + trackOrder(): OrderStatus
+    }
+
+    class Engineer #D6EAF8 {
+        - engineerId: String
+        - department: String
+        - specialization: String
+        --
+        + addInventoryItem(): Boolean
+        + updateItemStatus(): Boolean
+        + markShipmentReceived(): Boolean
+        + uploadPackingSlip(): Boolean
+        + confirmReceipt(): Boolean
+    }
+
+    class Admin #FADBD8 {
+        - adminId: String
+        - permissions: List<String>
+        --
+        + createUser(): Boolean
+        + deleteUser(): Boolean
+        + editUser(): Boolean
+        + viewAuditLogs(): List<AuditLog>
+        + configureSystem(): Boolean
+        + exportData(): Boolean
+    }
+}
+
+package "Core Business Logic" #E8F8F5 {
+    class InventoryItem #A9DFBF {
+        - itemId: String
+        - description: String
+        - vendor: String
+        - quantity: Integer
+        - storageLocation: String
+        - status: ItemStatus
+        - urgency: UrgencyLevel
+        - createdAt: DateTime
+        - updatedAt: DateTime
+        --
+        + updateStatus(): Boolean
+        + updateQuantity(): Boolean
+        + validateItemId(): Boolean
+    }
+
+    class Shipment #AED6F1 {
+        - shipmentId: String
+        - trackingNumber: String
+        - vendor: String
+        - carrier: String
+        - expectedDeliveryDate: DateTime
+        - actualDeliveryDate: DateTime
+        - contents: List<String>
+        - status: ShipmentStatus
+        - urgency: UrgencyLevel
+        - clientId: String
+        --
+        + markReceived(): Boolean
+        + markPartiallyReceived(): Boolean
+        + updateExpectedDate(): Boolean
+        + flagMissingItems(): Boolean
+    }
+
+    class PackingSlip #F9E79F {
+        - slipId: String
+        - fileName: String
+        - fileType: FileType
+        - filePath: String
+        - uploadedBy: String
+        - uploadDate: DateTime
+        - linkedShipmentId: String
+        - linkedItemId: String
+        - vendor: String
+        - urgency: UrgencyLevel
+        - version: Integer
+        --
+        + upload(): Boolean
+        + validateFileType(): Boolean
+        + linkToShipment(): Boolean
+        + linkToInventory(): Boolean
+        + createNewVersion(): Boolean
+    }
+
+    class Project #D7BDE2 {
+        - projectId: String
+        - projectName: String
+        - clientId: String
+        - engineerId: String
+        - startDate: DateTime
+        - expectedEndDate: DateTime
+        - status: ProjectStatus
+        --
+        + assignItems(): Boolean
+        + trackProgress(): Boolean
+        + generateReport(): Boolean
+    }
+}
+
+package "Status Enumerations" #FDF2E9 {
+    enum ItemStatus #F8C471 {
+        PENDING_INSPECTION
+        READY_FOR_DEPLOYMENT
+        INSTALLED
+        MISSING
+        PARTIALLY_RECEIVED
+    }
+
+    enum ShipmentStatus #85C1E9 {
+        PENDING
+        IN_TRANSIT
+        DELIVERED
+        PARTIALLY_RECEIVED
+        DELAYED
+    }
+
+    enum ProjectStatus #BB8FCE {
+        PLANNING
+        IN_PROGRESS
+        DEPLOYED
+        COMPLETED
+        ON_HOLD
+    }
+
+    enum UrgencyLevel #F1948A {
+        LOW
+        MEDIUM
+        HIGH
+        CRITICAL
+    }
+
+    enum FileType #82E0AA {
+        PDF
+        JPG
+        PNG
+    }
+}
+
+package "System Services" #EBF5FB {
+    class AuditLog #D6DBDF {
+        - logId: String
+        - userId: String
+        - action: String
+        - entityType: String
+        - entityId: String
+        - timestamp: DateTime
+        - ipAddress: String
+        - details: String
+        --
+        + logAction(): Boolean
+        + searchLogs(): List<AuditLog>
+        + exportLogs(): Boolean
+    }
+
+    class Dashboard #D5DBDB {
+        - dashboardId: String
+        - userId: String
+        - widgets: List<Widget>
+        --
+        + displayMetrics(): Map<String, Object>
+        + filterByVendor(): List<Object>
+        + filterByUrgency(): List<Object>
+        + filterByStatus(): List<Object>
+        + generateReport(): Report
+    }
+
+    class SystemConfiguration #CCD1D1 {
+        - configId: String
+        - defaultTags: List<String>
+        - dataRetentionDays: Integer
+        - maxFileSize: Long
+        - allowedFileTypes: List<FileType>
+        - notificationSettings: Map<String, Boolean>
+        --
+        + updateConfiguration(): Boolean
+        + validateSettings(): Boolean
+        + resetToDefaults(): Boolean
+    }
+
+    class SearchService #B2BABB {
+        --
+        + searchInventory(): List<InventoryItem>
+        + searchShipments(): List<Shipment>
+        + searchPackingSlips(): List<PackingSlip>
+        + searchByDateRange(): List<Object>
+        + searchByVendor(): List<Object>
+        + exportSearchResults(): Boolean
+    }
+
+    class NotificationService #A6ACAF {
+        --
+        + sendShipmentAlert(): Boolean
+        + sendLowStockAlert(): Boolean
+        + sendDeliveryConfirmation(): Boolean
+        + sendAccessDeniedAlert(): Boolean
+    }
+}
+
+' Relationships with colored arrows
+User ||--|| UserRole : <color:blue>has</color>
+Client --|> User : <color:green>extends</color>
+Engineer --|> User : <color:green>extends</color>
+Admin --|> User : <color:green>extends</color>
+
+Client ||--o{ Shipment : <color:blue>creates</color>
+Client ||--o{ PackingSlip : <color:orange>uploads</color>
+Engineer ||--o{ InventoryItem : <color:purple>manages</color>
+Engineer ||--o{ Shipment : <color:purple>processes</color>
+Engineer ||--o{ PackingSlip : <color:orange>uploads</color>
+Admin ||--o{ User : <color:red>manages</color>
+Admin ||--o{ AuditLog : <color:red>views</color>
+Admin ||--|| SystemConfiguration : <color:red>configures</color>
+
+InventoryItem ||--|| ItemStatus : <color:orange>has</color>
+InventoryItem ||--|| UrgencyLevel : <color:orange>has</color>
+InventoryItem }o--|| Project : <color:purple>belongs to</color>
+
+Shipment ||--|| ShipmentStatus : <color:blue>has</color>
+Shipment ||--|| UrgencyLevel : <color:blue>has</color>
+Shipment ||--o{ InventoryItem : <color:green>contains</color>
+Shipment ||--o{ PackingSlip : <color:yellow>documented by</color>
+
+PackingSlip ||--|| FileType : <color:yellow>has</color>
+PackingSlip ||--|| UrgencyLevel : <color:yellow>has</color>
+PackingSlip }o--|| Shipment : <color:blue>documents</color>
+PackingSlip }o--|| InventoryItem : <color:green>documents</color>
+
+Project ||--|| ProjectStatus : <color:purple>has</color>
+Project ||--o{ Client : <color:green>assigned to</color>
+Project ||--o{ Engineer : <color:blue>managed by</color>
+
+User ||--o{ AuditLog : <color:gray>generates</color>
+Dashboard ||--|| User : <color:gray>belongs to</color>
+SearchService ..> InventoryItem : <color:green>searches</color>
+SearchService ..> Shipment : <color:blue>searches</color>
+SearchService ..> PackingSlip : <color:yellow>searches</color>
+NotificationService ..> User : <color:red>notifies</color>
+
+@enduml

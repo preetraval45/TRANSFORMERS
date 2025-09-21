@@ -1,3 +1,5 @@
+# TRANSFORMERS
+
 Group Name: "TRANSFORMERS"
 
 Members:
@@ -18,15 +20,14 @@ Preet Raval -
 
 Name: Carlota Najera Alvarez
 
-Programming Languages: Java, JavaScript, SQL, HTML Focus 
+Programming Languages: Java, JavaScript, SQL, HTML Focus
 
 Areas: UI/UX Design, Technical Documentation, SCADA Systems
 
 Soft Skills: Organization, Adaptability, Mentorship, Problem Solving
 
-
 Name: Yana Batsuk  
-Programming & Web Development: Python, JavaScript, Java, C, C++, HTML, CSS, Next.js, Node.js, Express.js, FastAPI, REST APIs, Full-Stack Development, Responsive Web Design 
+Programming & Web Development: Python, JavaScript, Java, C, C++, HTML, CSS, Next.js, Node.js, Express.js, FastAPI, REST APIs, Full-Stack Development, Responsive Web Design
 
 Systems & Databases: Linux, System Administration, Networking, Troubleshooting, MySQL, SQL, MongoDB  
 

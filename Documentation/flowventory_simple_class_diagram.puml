@@ -1,0 +1,124 @@
+@startuml FlowventorySimpleClassDiagram
+!theme toy
+
+skinparam {
+    BackgroundColor #FFFFFF
+    ClassBackgroundColor #E8F4FD
+    ClassBorderColor #2E86C1
+    ClassFontColor #1B4F72
+    ClassFontSize 14
+    ClassFontStyle bold
+
+    PackageBackgroundColor #F8F9FA
+    PackageBorderColor #85929E
+    PackageFontColor #2C3E50
+    PackageFontSize 16
+    PackageFontStyle bold
+}
+
+title <size:20><b>Flowventory - Class Structure</b></size>
+
+package "User Classes" {
+    abstract class User {
+        - userId: String
+        - username: String
+        - password: String
+        - email: String
+        + authenticate(): Boolean
+        + getRole(): UserRole
+    }
+
+    class Client extends User {
+        - clientId: String
+        - companyName: String
+        + viewShipments(): List<Shipment>
+        + uploadPackingSlip(): Boolean
+    }
+
+    class Engineer extends User {
+        - engineerId: String
+        - department: String
+        + addInventoryItem(): Boolean
+        + updateItemStatus(): Boolean
+    }
+
+    class Admin extends User {
+        - adminId: String
+        - permissions: List<String>
+        + createUser(): Boolean
+        + viewAuditLogs(): List<AuditLog>
+    }
+}
+
+package "Business Classes" {
+    class InventoryItem {
+        - itemId: String
+        - description: String
+        - vendor: String
+        - quantity: Integer
+        - status: ItemStatus
+        + updateStatus(): Boolean
+        + updateQuantity(): Boolean
+    }
+
+    class Shipment {
+        - shipmentId: String
+        - trackingNumber: String
+        - vendor: String
+        - expectedDeliveryDate: DateTime
+        - status: ShipmentStatus
+        + markReceived(): Boolean
+        + flagMissingItems(): Boolean
+    }
+
+    class PackingSlip {
+        - slipId: String
+        - fileName: String
+        - fileType: FileType
+        - uploadedBy: String
+        - linkedShipmentId: String
+        + upload(): Boolean
+        + linkToShipment(): Boolean
+    }
+
+    class Project {
+        - projectId: String
+        - projectName: String
+        - clientId: String
+        - status: ProjectStatus
+        + assignItems(): Boolean
+        + trackProgress(): Boolean
+    }
+}
+
+package "System Classes" {
+    class AuditLog {
+        - logId: String
+        - userId: String
+        - action: String
+        - timestamp: DateTime
+        + logAction(): Boolean
+        + searchLogs(): List<AuditLog>
+    }
+
+    class Dashboard {
+        - dashboardId: String
+        - userId: String
+        + displayMetrics(): Map<String, Object>
+        + generateReport(): Report
+    }
+}
+
+' Relationships
+Client --> Shipment : creates
+Engineer --> InventoryItem : manages
+Engineer --> Shipment : processes
+Admin --> User : manages
+Admin --> AuditLog : views
+
+Shipment --> InventoryItem : contains
+Shipment --> PackingSlip : documented by
+InventoryItem --> Project : belongs to
+User --> AuditLog : generates
+
+@enduml
